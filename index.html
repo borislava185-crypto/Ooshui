@@ -73,28 +73,28 @@ html, body {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(26,61,168,0.13);
-  /* no background colour so no black shows */
-  background: transparent;
   line-height: 0;
+  background: transparent;
 }
 
-/* coloured top accent */
 .video-box::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--yellow), var(--blue-lt), var(--yellow));
   z-index: 2;
+  border-radius: 20px 20px 0 0;
 }
 
 .video-box video {
   width: 100%;
-  height: auto;          /* height follows video's own aspect ratio */
+  height: auto;
   max-height: 340px;
   display: block;
   border-radius: 20px;
-  /* cover crops into the frame keeping centre-top of Anna visible */
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
+  background: transparent;
+  vertical-align: top;
 }
 
 .video-overlay {
@@ -113,7 +113,7 @@ html, body {
 }
 .v-icon svg { width: 14px; height: 14px; color: #fff; }
 
-/* ── Bubble ── */
+/* ── Bubble area ── */
 .bubble-area {
   flex: 1;
   display: flex;
@@ -136,6 +136,23 @@ html, body {
 }
 .bubble:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,61,168,0.1); }
 .bubble:active { transform: scale(0.97); }
+
+.bubble.has-text {
+  background: var(--surface);
+  box-shadow: 0 2px 12px rgba(26,61,168,0.08);
+}
+.bubble.has-text p {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+.bubble.has-text .anna-spell {
+  letter-spacing: 0.18em;
+  font-weight: 800;
+  color: var(--blue);
+}
+
 .bubble.empty { background: linear-gradient(135deg, #e2e8f8, #d4dcf5); }
 .bubble.empty::after {
   content: '';
@@ -264,8 +281,10 @@ html, body {
   </div>
 
   <div class="bubble-area">
-    <div class="bubble empty" id="bubble" onclick="cycleBubble()"></div>
-    <div class="tap-hint">Tap bubble to continue</div>
+    <div class="bubble has-text" id="bubble" onclick="nextBubble()">
+      <p>Hi, my name is <span class="anna-spell">A N N A</span>. Anna. 👋</p>
+    </div>
+    <div class="tap-hint">Tap to continue</div>
   </div>
 
   <div class="bottom-bar">
@@ -288,27 +307,67 @@ html, body {
 </div>
 
 <script>
+  const messages = [
+    `Hi, my name is <span class="anna-spell">A N N A</span>. Anna. 👋`,
+    `I will be your tutor, let's start with a simple question — <strong>How are you? How are you?</strong> 🤟`,
+    `You could say... <strong>I'm good</strong> 😊`,
+  ];
+
+  let step = 0;
   let busy = false;
-  function cycleBubble() {
+
+  function nextBubble() {
     if (busy) return;
     busy = true;
+
     const area = document.querySelector('.bubble-area');
     const hint = area.querySelector('.tap-hint');
     const old = document.getElementById('bubble');
     if (old) old.remove();
+
     const typing = document.createElement('div');
     typing.className = 'typing-bubble';
     typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
     area.insertBefore(typing, hint);
+
     setTimeout(() => {
       typing.remove();
+      step++;
       const nb = document.createElement('div');
-      nb.className = 'bubble empty';
-      nb.id = 'bubble';
-      nb.onclick = cycleBubble;
+
+      if (step < messages.length) {
+        nb.className = 'bubble has-text';
+        nb.id = 'bubble';
+        nb.onclick = nextBubble;
+        nb.innerHTML = `<p>${messages[step]}</p>`;
+        hint.textContent = 'Tap to continue';
+      } else {
+        nb.className = 'bubble empty';
+        nb.id = 'bubble';
+        nb.onclick = restartBubbles;
+        hint.textContent = 'Tap to start again';
+        step = -1;
+      }
+
       area.insertBefore(nb, hint);
       busy = false;
-    }, 1200);
+    }, 1000);
+  }
+
+  function restartBubbles() {
+    step = 0;
+    busy = false;
+    const area = document.querySelector('.bubble-area');
+    const hint = area.querySelector('.tap-hint');
+    const old = document.getElementById('bubble');
+    if (old) old.remove();
+    const nb = document.createElement('div');
+    nb.className = 'bubble has-text';
+    nb.id = 'bubble';
+    nb.onclick = nextBubble;
+    nb.innerHTML = `<p>${messages[0]}</p>`;
+    hint.textContent = 'Tap to continue';
+    area.insertBefore(nb, hint);
   }
 
   let camOn = true;
