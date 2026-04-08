@@ -11,20 +11,21 @@
 
 ```
 :root {
-  --blue:     #1A3DA8;
-  --blue-lt:  #4A7BF7;
-  --yellow:   #F5C518;
-  --yellow-w: #FFD952;
-  --bg:       #EEF2FF;
-  --surface:  #FFFFFF;
-  --muted:    #8892B0;
-  --text:     #1a1a2e;
+  --blue:      #1A3DA8;
+  --blue-lt:   #4A7BF7;
+  --blue-bg:   #E8EFFE;   /* light blue background like the pic */
+  --yellow:    #F5C518;
+  --yellow-w:  #FFD952;
+  --surface:   #FFFFFF;
+  --text:      #1a1a2e;
+  --muted:     #8892B0;
+  --icon-bg:   #D6E0FA;   /* blue-tinted circle for icons */
 }
 
 html, body {
   height: 100%;
   font-family: 'Nunito', sans-serif;
-  background: var(--bg);
+  background: #c8d3ee;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,9 +35,9 @@ html, body {
 .card {
   width: min(480px, 96vw);
   height: min(780px, 96vh);
-  background: var(--bg);
+  background: var(--blue-bg);
   border-radius: 28px;
-  box-shadow: 0 20px 60px rgba(26,61,168,0.18), 0 2px 8px rgba(26,61,168,0.08);
+  box-shadow: 0 20px 60px rgba(26,61,168,0.22);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -47,22 +48,23 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px 10px;
+  padding: 14px 20px 12px;
   flex-shrink: 0;
   background: var(--surface);
-  border-bottom: 1px solid rgba(26,61,168,0.07);
+  border-bottom: 1px solid rgba(26,61,168,0.08);
 }
+
+/* Blue circle icon buttons like the pic */
 .icon-btn {
-  width: 38px; height: 38px;
-  background: var(--bg);
+  width: 40px; height: 40px;
+  background: var(--icon-bg);
   border: none; border-radius: 50%; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: transform 0.15s, background 0.15s;
 }
-.icon-btn:hover { background: #dde4f8; transform: scale(1.08); }
-.icon-btn svg { width: 17px; height: 17px; color: var(--text); }
+.icon-btn:hover { background: #bccdf5; transform: scale(1.08); }
+.icon-btn svg { width: 17px; height: 17px; color: var(--blue); }
 
-/* Title + subtitle stacked */
 .topbar-centre {
   display: flex;
   flex-direction: column;
@@ -70,37 +72,36 @@ html, body {
   gap: 1px;
 }
 .tutor-name {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--text);
   line-height: 1;
 }
 .tutor-sub {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--blue-lt);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
 /* ── Video section ── */
 .video-wrap {
-  padding: 12px 14px 0;
+  padding: 14px 14px 0;
   flex-shrink: 0;
 }
 
 .video-card {
   border-radius: 20px;
-  /* dark outline only — no background fill */
   border: 2.5px solid #2a2a3e;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
   overflow: hidden;
   position: relative;
   background: transparent;
   line-height: 0;
 }
 
-/* thin yellow-blue top accent */
+/* yellow-blue top accent */
 .video-card::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -112,7 +113,7 @@ html, body {
 .video-card video {
   width: 100%;
   height: auto;
-  max-height: 300px;
+  max-height: 295px;
   display: block;
   border-radius: 18px;
   object-fit: contain;
@@ -139,24 +140,24 @@ html, body {
 
 /* ── Bubble section ── */
 .bubble-wrap {
-  padding: 12px 14px;
+  padding: 14px 14px 0;
   flex-shrink: 0;
 }
 
 .bubble-card {
   border-radius: 20px;
   border: 2.5px solid var(--yellow);
-  box-shadow: 0 4px 16px rgba(245,197,24,0.18);
   background: var(--surface);
-  padding: 20px 22px;
-  min-height: 80px;
+  box-shadow: 0 2px 12px rgba(245,197,24,0.15);
+  padding: 22px 24px;
+  min-height: 82px;
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s;
   position: relative;
   overflow: hidden;
   animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,197,24,0.28); }
+.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,197,24,0.25); }
 .bubble-card:active { transform: scale(0.98); }
 
 .bubble-card p {
@@ -171,14 +172,12 @@ html, body {
   color: var(--blue);
 }
 
-/* Typing dots */
 .typing-card {
   border-radius: 20px;
   border: 2.5px solid var(--yellow);
-  box-shadow: 0 4px 16px rgba(245,197,24,0.18);
   background: var(--surface);
-  padding: 22px 24px;
-  min-height: 80px;
+  padding: 24px;
+  min-height: 82px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -205,46 +204,46 @@ html, body {
 
 /* ── Bottom bar ── */
 .bottom-bar {
-  padding: 10px 14px 16px;
+  padding: 12px 14px 18px;
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
   background: var(--surface);
-  border-top: 1px solid rgba(26,61,168,0.07);
+  border-top: 1px solid rgba(26,61,168,0.08);
 }
+
 .keyboard-btn {
   width: 50px; height: 50px;
-  background: var(--bg);
+  background: var(--icon-bg);
   border: none; border-radius: 14px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: transform 0.15s, background 0.15s;
 }
-.keyboard-btn:hover { background: #dde4f8; transform: scale(1.07); }
-.keyboard-btn svg { width: 22px; height: 22px; color: var(--muted); }
+.keyboard-btn:hover { background: #bccdf5; transform: scale(1.07); }
+.keyboard-btn svg { width: 22px; height: 22px; color: var(--blue); }
 
+/* Yellow camera button matching the pic exactly */
 .camera-btn {
   flex: 1; height: 52px;
-  background: linear-gradient(135deg, var(--yellow), var(--yellow-w));
-  border: none; border-radius: 26px; cursor: pointer;
+  background: var(--yellow);
+  border: none; border-radius: 30px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800;
-  color: var(--blue);
-  box-shadow: 0 4px 18px rgba(245,197,24,0.4);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.25s;
+  font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(245,197,24,0.45);
+  transition: transform 0.15s, box-shadow 0.15s;
   position: relative; overflow: hidden;
 }
-.camera-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent);
-  border-radius: inherit;
-}
-.camera-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 24px rgba(245,197,24,0.55); }
+.camera-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(245,197,24,0.6); }
 .camera-btn:active { transform: scale(0.97); }
-.camera-btn.off { background: linear-gradient(135deg, #e2e8f8, #cdd6f0); color: var(--muted); box-shadow: none; }
+.camera-btn.off {
+  background: #dde4f8;
+  color: var(--muted);
+  box-shadow: none;
+}
 .camera-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 .on-dot {
-  width: 8px; height: 8px; background: #22C55E; border-radius: 50%;
+  width: 9px; height: 9px; background: #22C55E; border-radius: 50%;
   flex-shrink: 0; box-shadow: 0 0 6px rgba(34,197,94,0.7);
 }
 ```
