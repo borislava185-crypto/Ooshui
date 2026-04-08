@@ -32,7 +32,6 @@ html, body {
   overflow: hidden;
 }
 
-/* ── Main card ── */
 .card {
   width: min(480px, 96vw);
   height: min(780px, 96vh);
@@ -74,30 +73,48 @@ html, body {
 }
 .video-box {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: linear-gradient(145deg, #c0cff5, #d5e0fc);
+  background: #0a0f1e;
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(26,61,168,0.13), inset 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: 0 4px 20px rgba(26,61,168,0.18);
+  /* height controlled by the video itself */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+/* Yellow-blue top accent */
 .video-box::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--yellow), var(--blue-lt), var(--yellow));
   z-index: 2;
 }
+
+.video-box video {
+  width: 100%;
+  max-height: 320px;
+  border-radius: 20px;
+  display: block;
+  /* contain = show full video, no cropping, letterbox if needed */
+  object-fit: contain;
+  background: #0a0f1e;
+}
+
+/* Corner overlay icons */
 .video-overlay {
   position: absolute; inset: 0; z-index: 3;
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 10px;
+  pointer-events: none;
 }
 .v-icon {
   width: 28px; height: 28px;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.22);
   backdrop-filter: blur(6px);
   border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
+  pointer-events: all; cursor: pointer;
 }
 .v-icon svg { width: 14px; height: 14px; color: #fff; }
 
@@ -191,7 +208,6 @@ html, body {
 .keyboard-btn:hover { background: #dde4f8; transform: scale(1.07); }
 .keyboard-btn svg { width: 20px; height: 20px; color: var(--muted); }
 
-/* Camera toggle button */
 .camera-btn {
   flex: 1;
   height: 52px;
@@ -220,7 +236,6 @@ html, body {
 }
 .camera-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 
-/* On indicator dot */
 .on-dot {
   width: 8px; height: 8px;
   background: #22C55E;
@@ -257,15 +272,22 @@ html, body {
 
   <div class="video-wrap">
     <div class="video-box">
+      <video
+        src="https://raw.githubusercontent.com/borislava185-crypto/Ooshui/main/copy_4F416937-E49E-4841-80DA-EBE71335C05F.mov"
+        autoplay
+        loop
+        muted
+        playsinline
+      ></video>
       <div class="video-overlay">
         <div class="v-icon">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
           </svg>
         </div>
-        <div class="v-icon">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"/>
+        <div class="v-icon" onclick="toggleMute()">
+          <svg id="muteIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/>
           </svg>
         </div>
       </div>
@@ -307,17 +329,14 @@ html, body {
 <script>
   // Bubble cycle
   let busy = false;
-  const bubbleArea = document.querySelector('.bubble-area');
-
   function cycleBubble() {
     if (busy) return;
     busy = true;
     const area = document.querySelector('.bubble-area');
     const hint = area.querySelector('.tap-hint');
-
-    // Remove bubble, show typing
     const old = document.getElementById('bubble');
     if (old) old.remove();
+
     const typing = document.createElement('div');
     typing.className = 'typing-bubble';
     typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
@@ -341,15 +360,17 @@ html, body {
     const btn = document.getElementById('cameraBtn');
     const lbl = document.getElementById('camLabel');
     const dot = document.getElementById('onDot');
-    if (camOn) {
-      btn.classList.remove('off');
-      lbl.textContent = 'Camera On';
-      dot.style.display = 'block';
-    } else {
-      btn.classList.add('off');
-      lbl.textContent = 'Camera Off';
-      dot.style.display = 'none';
-    }
+    btn.classList.toggle('off', !camOn);
+    lbl.textContent = camOn ? 'Camera On' : 'Camera Off';
+    dot.style.display = camOn ? 'block' : 'none';
+  }
+
+  // Mute toggle
+  let muted = true;
+  function toggleMute() {
+    const vid = document.querySelector('video');
+    muted = !muted;
+    vid.muted = muted;
   }
 </script>
 
