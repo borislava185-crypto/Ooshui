@@ -11,39 +11,40 @@
 
 ```
 :root {
-  --blue:      #1A3DA8;
-  --blue-lt:   #4A7BF7;
-  --blue-bg:   #E8EFFE;   /* light blue background like the pic */
-  --yellow:    #F5C518;
-  --yellow-w:  #FFD952;
-  --surface:   #FFFFFF;
-  --text:      #1a1a2e;
-  --muted:     #8892B0;
-  --icon-bg:   #D6E0FA;   /* blue-tinted circle for icons */
+  --yellow:   #F5C518;
+  --yellow-w: #FFD952;
+  --blue-lt:  #4A7BF7;
+  --surface:  #FFFFFF;
+  --bg:       #F2F2F7;   /* iOS light grey page bg */
+  --btn-bg:   #EFEFEF;   /* light grey circles like pic 2 */
+  --text:     #1a1a2e;
+  --muted:    #8892B0;
+  --border:   #2a2a3e;   /* dark outline on video */
 }
 
 html, body {
   height: 100%;
   font-family: 'Nunito', sans-serif;
-  background: #c8d3ee;
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+/* White card — matches pic 2 */
 .card {
   width: min(480px, 96vw);
   height: min(780px, 96vh);
-  background: var(--blue-bg);
+  background: var(--surface);
   border-radius: 28px;
-  box-shadow: 0 20px 60px rgba(26,61,168,0.22);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-/* ── Top bar ── */
+/* ── Top bar — white, light grey circles ── */
 .topbar {
   display: flex;
   align-items: center;
@@ -51,19 +52,17 @@ html, body {
   padding: 14px 20px 12px;
   flex-shrink: 0;
   background: var(--surface);
-  border-bottom: 1px solid rgba(26,61,168,0.08);
+  border-bottom: 1px solid #E5E5EA;
 }
-
-/* Blue circle icon buttons like the pic */
 .icon-btn {
   width: 40px; height: 40px;
-  background: var(--icon-bg);
+  background: var(--btn-bg);
   border: none; border-radius: 50%; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: transform 0.15s, background 0.15s;
 }
-.icon-btn:hover { background: #bccdf5; transform: scale(1.08); }
-.icon-btn svg { width: 17px; height: 17px; color: var(--blue); }
+.icon-btn:hover { background: #E0E0E0; transform: scale(1.08); }
+.icon-btn svg { width: 17px; height: 17px; color: #3C3C43; }
 
 .topbar-centre {
   display: flex;
@@ -85,40 +84,31 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ── Video section ── */
+/* ── Video — white inside, dark outline ── */
 .video-wrap {
-  padding: 14px 14px 0;
+  padding: 14px 16px 0;
   flex-shrink: 0;
 }
 
 .video-card {
   border-radius: 20px;
-  border: 2.5px solid #2a2a3e;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  border: 2.5px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   overflow: hidden;
   position: relative;
-  background: transparent;
+  background: #FFFFFF;   /* white background = no black corners */
   line-height: 0;
-}
-
-/* yellow-blue top accent */
-.video-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--yellow), var(--blue-lt), var(--yellow));
-  z-index: 2;
-  border-radius: 18px 18px 0 0;
 }
 
 .video-card video {
   width: 100%;
   height: auto;
-  max-height: 295px;
+  max-height: 300px;
   display: block;
-  border-radius: 18px;
+  border-radius: 17px;
   object-fit: contain;
   object-position: center top;
-  background: transparent;
+  background: #FFFFFF;
   vertical-align: top;
 }
 
@@ -129,35 +119,34 @@ html, body {
   pointer-events: none;
 }
 .v-icon {
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.28);
+  width: 30px; height: 30px;
+  background: rgba(0,0,0,0.18);
   backdrop-filter: blur(6px);
-  border-radius: 7px;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   pointer-events: all; cursor: pointer;
 }
-.v-icon svg { width: 14px; height: 14px; color: #fff; }
+.v-icon svg { width: 15px; height: 15px; color: #fff; }
 
-/* ── Bubble section ── */
+/* ── Bubble — white, yellow border ── */
 .bubble-wrap {
-  padding: 14px 14px 0;
+  padding: 14px 16px 0;
   flex-shrink: 0;
 }
 
 .bubble-card {
-  border-radius: 20px;
+  border-radius: 18px;
   border: 2.5px solid var(--yellow);
   background: var(--surface);
-  box-shadow: 0 2px 12px rgba(245,197,24,0.15);
   padding: 22px 24px;
-  min-height: 82px;
+  min-height: 80px;
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s;
+  animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
   position: relative;
   overflow: hidden;
-  animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,197,24,0.25); }
+.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,197,24,0.22); }
 .bubble-card:active { transform: scale(0.98); }
 
 .bubble-card p {
@@ -169,15 +158,15 @@ html, body {
 .anna-spell {
   letter-spacing: 0.22em;
   font-weight: 800;
-  color: var(--blue);
+  color: #1A3DA8;
 }
 
 .typing-card {
-  border-radius: 20px;
+  border-radius: 18px;
   border: 2.5px solid var(--yellow);
   background: var(--surface);
   padding: 24px;
-  min-height: 82px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -202,27 +191,27 @@ html, body {
   40%          { transform: translateY(-7px); opacity: 1; }
 }
 
-/* ── Bottom bar ── */
+/* ── Bottom bar — white, yellow camera ── */
 .bottom-bar {
-  padding: 12px 14px 18px;
+  padding: 12px 16px 20px;
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
   background: var(--surface);
-  border-top: 1px solid rgba(26,61,168,0.08);
+  border-top: 1px solid #E5E5EA;
 }
 
 .keyboard-btn {
   width: 50px; height: 50px;
-  background: var(--icon-bg);
+  background: var(--btn-bg);
   border: none; border-radius: 14px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: transform 0.15s, background 0.15s;
 }
-.keyboard-btn:hover { background: #bccdf5; transform: scale(1.07); }
-.keyboard-btn svg { width: 22px; height: 22px; color: var(--blue); }
+.keyboard-btn:hover { background: #E0E0E0; transform: scale(1.07); }
+.keyboard-btn svg { width: 22px; height: 22px; color: #3C3C43; }
 
-/* Yellow camera button matching the pic exactly */
+/* Solid yellow pill — matches pic 2 exactly */
 .camera-btn {
   flex: 1; height: 52px;
   background: var(--yellow);
@@ -230,21 +219,22 @@ html, body {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
   color: var(--text);
-  box-shadow: 0 4px 16px rgba(245,197,24,0.45);
+  box-shadow: 0 3px 12px rgba(245,197,24,0.4);
   transition: transform 0.15s, box-shadow 0.15s;
-  position: relative; overflow: hidden;
 }
-.camera-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(245,197,24,0.6); }
+.camera-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,197,24,0.55); }
 .camera-btn:active { transform: scale(0.97); }
 .camera-btn.off {
-  background: #dde4f8;
+  background: var(--btn-bg);
   color: var(--muted);
   box-shadow: none;
 }
 .camera-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 .on-dot {
-  width: 9px; height: 9px; background: #22C55E; border-radius: 50%;
-  flex-shrink: 0; box-shadow: 0 0 6px rgba(34,197,94,0.7);
+  width: 9px; height: 9px;
+  background: #22C55E; border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(34,197,94,0.7);
 }
 ```
 
@@ -343,7 +333,6 @@ html, body {
   function nextBubble() {
     if (busy) return;
     busy = true;
-
     const wrap = document.getElementById('bubbleWrap');
     const old = document.getElementById('bubble');
     if (old) old.remove();
