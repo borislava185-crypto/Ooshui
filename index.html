@@ -174,8 +174,6 @@ html, body {
 .dot:nth-child(2) { animation-delay: 0.18s; }
 .dot:nth-child(3) { animation-delay: 0.36s; }
 
-.tap-hint { font-size: 11px; color: var(--muted); margin-top: 8px; padding-left: 2px; }
-
 @keyframes popIn {
   from { opacity: 0; transform: translateY(14px) scale(0.95); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -279,7 +277,6 @@ html, body {
     <div class="bubble has-text" id="bubble" onclick="nextBubble()">
       <p>Hi, my name is... 👋</p>
     </div>
-    <div class="tap-hint">Tap to continue</div>
   </div>
 
   <div class="bottom-bar">
@@ -319,37 +316,23 @@ html, body {
     busy = true;
 
     const area = document.querySelector('.bubble-area');
-    const hint = area.querySelector('.tap-hint');
     const old = document.getElementById('bubble');
     if (old) old.remove();
 
     const typing = document.createElement('div');
     typing.className = 'typing-bubble';
     typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    area.insertBefore(typing, hint);
+    area.appendChild(typing);
 
     setTimeout(() => {
       typing.remove();
-      step++;
+      step = (step + 1) % messages.length;
       const nb = document.createElement('div');
-
-      if (step < messages.length) {
-        nb.className = 'bubble has-text';
-        nb.id = 'bubble';
-        nb.onclick = nextBubble;
-        nb.innerHTML = `<p>${messages[step]}</p>`;
-        hint.textContent = step === messages.length - 1 ? 'Tap to restart' : 'Tap to continue';
-      } else {
-        // Loop back to start
-        step = 0;
-        nb.className = 'bubble has-text';
-        nb.id = 'bubble';
-        nb.onclick = nextBubble;
-        nb.innerHTML = `<p>${messages[0]}</p>`;
-        hint.textContent = 'Tap to continue';
-      }
-
-      area.insertBefore(nb, hint);
+      nb.className = 'bubble has-text';
+      nb.id = 'bubble';
+      nb.onclick = nextBubble;
+      nb.innerHTML = `<p>${messages[step]}</p>`;
+      area.appendChild(nb);
       busy = false;
     }, 1000);
   }
