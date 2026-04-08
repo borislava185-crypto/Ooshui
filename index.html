@@ -86,8 +86,9 @@ html, body {
   max-height: 340px;
   display: block;
   border-radius: 20px;
-  object-fit: cover;
-  object-position: center center;
+  /* contain = whole video shown, no cropping at all */
+  object-fit: contain;
+  object-position: center top;
   background: transparent;
   vertical-align: top;
 }
