@@ -47,7 +47,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px 10px;
+  padding: 12px 20px 10px;
   flex-shrink: 0;
   background: var(--surface);
   border-bottom: 1px solid rgba(26,61,168,0.07);
@@ -61,57 +61,60 @@ html, body {
 }
 .icon-btn:hover { background: #dde4f8; transform: scale(1.08); }
 .icon-btn svg { width: 17px; height: 17px; color: var(--text); }
-.tutor-name { font-size: 16px; font-weight: 800; color: var(--text); }
+
+/* Title + subtitle stacked */
+.topbar-centre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.tutor-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+}
+.tutor-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue-lt);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 /* ── Video section ── */
 .video-wrap {
-  padding: 14px 14px 0;
+  padding: 12px 14px 0;
   flex-shrink: 0;
 }
 
-/* Outlined card around the video */
 .video-card {
-  border-radius: 22px;
-  border: 3px solid var(--blue);
-  box-shadow:
-    0 0 0 1px rgba(74,123,247,0.3),
-    0 8px 28px rgba(26,61,168,0.18);
+  border-radius: 20px;
+  /* dark outline only — no background fill */
+  border: 2.5px solid #2a2a3e;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
   overflow: hidden;
   position: relative;
-  background: #0a0f1e;
+  background: transparent;
   line-height: 0;
 }
 
-/* Yellow-blue top accent bar */
+/* thin yellow-blue top accent */
 .video-card::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--yellow), var(--blue-lt), var(--yellow));
   z-index: 2;
-}
-
-/* Label badge */
-.video-label {
-  position: absolute;
-  top: 10px; left: 50%; transform: translateX(-50%);
-  z-index: 4;
-  background: rgba(26,61,168,0.85);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
+  border-radius: 18px 18px 0 0;
 }
 
 .video-card video {
   width: 100%;
   height: auto;
-  max-height: 310px;
+  max-height: 300px;
   display: block;
+  border-radius: 18px;
   object-fit: contain;
   object-position: center top;
   background: transparent;
@@ -125,14 +128,14 @@ html, body {
   pointer-events: none;
 }
 .v-icon {
-  width: 30px; height: 30px;
-  background: rgba(255,255,255,0.22);
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.28);
   backdrop-filter: blur(6px);
-  border-radius: 8px;
+  border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
   pointer-events: all; cursor: pointer;
 }
-.v-icon svg { width: 15px; height: 15px; color: #fff; }
+.v-icon svg { width: 14px; height: 14px; color: #fff; }
 
 /* ── Bubble section ── */
 .bubble-wrap {
@@ -140,30 +143,27 @@ html, body {
   flex-shrink: 0;
 }
 
-/* Outlined card around the bubble */
 .bubble-card {
-  border-radius: 22px;
-  border: 3px solid var(--yellow);
-  box-shadow:
-    0 0 0 1px rgba(245,197,24,0.3),
-    0 6px 20px rgba(245,197,24,0.15);
+  border-radius: 20px;
+  border: 2.5px solid var(--yellow);
+  box-shadow: 0 4px 16px rgba(245,197,24,0.18);
   background: var(--surface);
-  padding: 18px 20px;
-  min-height: 90px;
+  padding: 20px 22px;
+  min-height: 80px;
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s;
   position: relative;
   overflow: hidden;
   animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(245,197,24,0.4), 0 10px 28px rgba(245,197,24,0.22); }
+.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,197,24,0.28); }
 .bubble-card:active { transform: scale(0.98); }
 
 .bubble-card p {
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 .anna-spell {
   letter-spacing: 0.22em;
@@ -171,14 +171,14 @@ html, body {
   color: var(--blue);
 }
 
-/* Typing dots inside the card */
+/* Typing dots */
 .typing-card {
-  border-radius: 22px;
-  border: 3px solid var(--yellow);
-  box-shadow: 0 0 0 1px rgba(245,197,24,0.3), 0 6px 20px rgba(245,197,24,0.15);
+  border-radius: 20px;
+  border: 2.5px solid var(--yellow);
+  box-shadow: 0 4px 16px rgba(245,197,24,0.18);
   background: var(--surface);
   padding: 22px 24px;
-  min-height: 90px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -192,7 +192,6 @@ html, body {
 .dot:nth-child(2) { animation-delay: 0.12s; }
 .dot:nth-child(3) { animation-delay: 0.24s; }
 
-/* Spacer */
 .spacer { flex: 1; }
 
 @keyframes popIn {
@@ -263,7 +262,10 @@ html, body {
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
-    <span class="tutor-name">Anna</span>
+    <div class="topbar-centre">
+      <span class="tutor-name">Anna</span>
+      <span class="tutor-sub">AI Tutor</span>
+    </div>
     <button class="icon-btn">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
@@ -276,7 +278,6 @@ html, body {
 
   <div class="video-wrap">
     <div class="video-card">
-      <div class="video-label">AI Tutor Anna 🤟</div>
       <video
         src="https://raw.githubusercontent.com/borislava185-crypto/Ooshui/main/copy_4F416937-E49E-4841-80DA-EBE71335C05F.mov"
         autoplay loop muted playsinline
