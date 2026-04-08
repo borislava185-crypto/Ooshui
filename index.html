@@ -34,7 +34,7 @@ html, body {
 .card {
   width: min(480px, 96vw);
   height: min(780px, 96vh);
-  background: var(--surface);
+  background: var(--bg);
   border-radius: 28px;
   box-shadow: 0 20px 60px rgba(26,61,168,0.18), 0 2px 8px rgba(26,61,168,0.08);
   display: flex;
@@ -42,12 +42,14 @@ html, body {
   overflow: hidden;
 }
 
+/* ── Top bar ── */
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px 12px;
+  padding: 14px 20px 10px;
   flex-shrink: 0;
+  background: var(--surface);
   border-bottom: 1px solid rgba(26,61,168,0.07);
 }
 .icon-btn {
@@ -61,37 +63,61 @@ html, body {
 .icon-btn svg { width: 17px; height: 17px; color: var(--text); }
 .tutor-name { font-size: 16px; font-weight: 800; color: var(--text); }
 
+/* ── Video section ── */
 .video-wrap {
-  padding: 14px 16px 10px;
+  padding: 14px 14px 0;
   flex-shrink: 0;
 }
-.video-box {
-  position: relative;
-  border-radius: 20px;
+
+/* Outlined card around the video */
+.video-card {
+  border-radius: 22px;
+  border: 3px solid var(--blue);
+  box-shadow:
+    0 0 0 1px rgba(74,123,247,0.3),
+    0 8px 28px rgba(26,61,168,0.18);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(26,61,168,0.13);
+  position: relative;
+  background: #0a0f1e;
   line-height: 0;
-  background: transparent;
 }
-.video-box::before {
+
+/* Yellow-blue top accent bar */
+.video-card::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
   background: linear-gradient(90deg, var(--yellow), var(--blue-lt), var(--yellow));
   z-index: 2;
-  border-radius: 20px 20px 0 0;
 }
-.video-box video {
+
+/* Label badge */
+.video-label {
+  position: absolute;
+  top: 10px; left: 50%; transform: translateX(-50%);
+  z-index: 4;
+  background: rgba(26,61,168,0.85);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.video-card video {
   width: 100%;
   height: auto;
-  max-height: 340px;
+  max-height: 310px;
   display: block;
-  border-radius: 20px;
-  /* contain = whole video shown, no cropping at all */
   object-fit: contain;
   object-position: center top;
   background: transparent;
   vertical-align: top;
 }
+
 .video-overlay {
   position: absolute; inset: 0; z-index: 3;
   display: flex; align-items: flex-end; justify-content: space-between;
@@ -99,68 +125,75 @@ html, body {
   pointer-events: none;
 }
 .v-icon {
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.28);
+  width: 30px; height: 30px;
+  background: rgba(255,255,255,0.22);
   backdrop-filter: blur(6px);
-  border-radius: 7px;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   pointer-events: all; cursor: pointer;
 }
-.v-icon svg { width: 14px; height: 14px; color: #fff; }
+.v-icon svg { width: 15px; height: 15px; color: #fff; }
 
-.bubble-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px 16px;
-  min-height: 0;
+/* ── Bubble section ── */
+.bubble-wrap {
+  padding: 12px 14px;
+  flex-shrink: 0;
 }
 
-.bubble {
-  border-radius: 18px 18px 18px 5px;
-  padding: 16px 18px;
-  min-height: 52px;
-  max-width: 88%;
+/* Outlined card around the bubble */
+.bubble-card {
+  border-radius: 22px;
+  border: 3px solid var(--yellow);
+  box-shadow:
+    0 0 0 1px rgba(245,197,24,0.3),
+    0 6px 20px rgba(245,197,24,0.15);
+  background: var(--surface);
+  padding: 18px 20px;
+  min-height: 90px;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  transition: transform 0.12s, box-shadow 0.12s;
   position: relative;
   overflow: hidden;
+  animation: popIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bubble:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,61,168,0.1); }
-.bubble:active { transform: scale(0.97); }
-.bubble.has-text {
-  background: var(--surface);
-  box-shadow: 0 2px 12px rgba(26,61,168,0.08);
-}
-.bubble.has-text p {
-  font-size: 15px;
-  font-weight: 600;
+.bubble-card:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(245,197,24,0.4), 0 10px 28px rgba(245,197,24,0.22); }
+.bubble-card:active { transform: scale(0.98); }
+
+.bubble-card p {
+  font-size: 19px;
+  font-weight: 700;
   color: var(--text);
   line-height: 1.5;
 }
 .anna-spell {
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   font-weight: 800;
   color: var(--blue);
 }
 
-.typing-bubble {
-  background: var(--bg);
-  border-radius: 18px 18px 18px 5px;
-  padding: 14px 18px;
-  display: inline-flex;
-  gap: 6px; align-items: center;
+/* Typing dots inside the card */
+.typing-card {
+  border-radius: 22px;
+  border: 3px solid var(--yellow);
+  box-shadow: 0 0 0 1px rgba(245,197,24,0.3), 0 6px 20px rgba(245,197,24,0.15);
+  background: var(--surface);
+  padding: 22px 24px;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   animation: popIn 0.2s ease;
 }
 .dot {
-  width: 8px; height: 8px;
+  width: 10px; height: 10px;
   background: var(--muted); border-radius: 50%;
   animation: bounce 0.8s ease-in-out infinite;
 }
 .dot:nth-child(2) { animation-delay: 0.12s; }
 .dot:nth-child(3) { animation-delay: 0.24s; }
+
+/* Spacer */
+.spacer { flex: 1; }
 
 @keyframes popIn {
   from { opacity: 0; transform: translateY(10px) scale(0.96); }
@@ -168,17 +201,19 @@ html, body {
 }
 @keyframes bounce {
   0%,80%,100% { transform: translateY(0); opacity: 0.35; }
-  40%          { transform: translateY(-6px); opacity: 1; }
+  40%          { transform: translateY(-7px); opacity: 1; }
 }
 
+/* ── Bottom bar ── */
 .bottom-bar {
-  padding: 10px 16px 16px;
+  padding: 10px 14px 16px;
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
+  background: var(--surface);
   border-top: 1px solid rgba(26,61,168,0.07);
 }
 .keyboard-btn {
-  width: 48px; height: 48px;
+  width: 50px; height: 50px;
   background: var(--bg);
   border: none; border-radius: 14px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -186,7 +221,7 @@ html, body {
   transition: transform 0.15s, background 0.15s;
 }
 .keyboard-btn:hover { background: #dde4f8; transform: scale(1.07); }
-.keyboard-btn svg { width: 20px; height: 20px; color: var(--muted); }
+.keyboard-btn svg { width: 22px; height: 22px; color: var(--muted); }
 
 .camera-btn {
   flex: 1; height: 52px;
@@ -220,6 +255,8 @@ html, body {
 <body>
 <div class="card">
 
+  <!-- Top bar -->
+
   <div class="topbar">
     <button class="icon-btn">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -235,8 +272,11 @@ html, body {
     </button>
   </div>
 
+  <!-- Video -->
+
   <div class="video-wrap">
-    <div class="video-box">
+    <div class="video-card">
+      <div class="video-label">AI Tutor Anna 🤟</div>
       <video
         src="https://raw.githubusercontent.com/borislava185-crypto/Ooshui/main/copy_4F416937-E49E-4841-80DA-EBE71335C05F.mov"
         autoplay loop muted playsinline
@@ -256,11 +296,17 @@ html, body {
     </div>
   </div>
 
-  <div class="bubble-area">
-    <div class="bubble has-text" id="bubble" onclick="nextBubble()">
+  <!-- Bubble -->
+
+  <div class="bubble-wrap" id="bubbleWrap">
+    <div class="bubble-card" id="bubble" onclick="nextBubble()">
       <p>Hi, my name is... 👋</p>
     </div>
   </div>
+
+  <div class="spacer"></div>
+
+  <!-- Bottom bar -->
 
   <div class="bottom-bar">
     <button class="keyboard-btn">
@@ -298,24 +344,24 @@ html, body {
     if (busy) return;
     busy = true;
 
-    const area = document.querySelector('.bubble-area');
+    const wrap = document.getElementById('bubbleWrap');
     const old = document.getElementById('bubble');
     if (old) old.remove();
 
     const typing = document.createElement('div');
-    typing.className = 'typing-bubble';
+    typing.className = 'typing-card';
     typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    area.appendChild(typing);
+    wrap.appendChild(typing);
 
     setTimeout(() => {
       typing.remove();
       step = (step + 1) % messages.length;
       const nb = document.createElement('div');
-      nb.className = 'bubble has-text';
+      nb.className = 'bubble-card';
       nb.id = 'bubble';
       nb.onclick = nextBubble;
       nb.innerHTML = `<p>${messages[step]}</p>`;
-      area.appendChild(nb);
+      wrap.appendChild(nb);
       busy = false;
     }, 150);
   }
